@@ -1,28 +1,32 @@
-import {createFeature, createReducer, on} from "@ngrx/store";
-import {authActions} from "./actions";
-import {AuthState} from "../types/authState";
+import {createFeature, createReducer, on} from '@ngrx/store'
+import {authActions} from './actions'
+import {AuthState} from '../types/authState'
 
 const initialState: AuthState = {
+  user: null,
   isAuthenticated: false,
-};
+}
 
 const authFeature = createFeature({
-  name: "auth",
+  name: 'auth',
   reducer: createReducer(
     initialState,
-    on(authActions.authenticated, (state) => ({
+    on(authActions.setUser, (state, {user}) => ({
       ...state,
-      isAuthenticated: true,
+      user,
+      isAuthenticated: !!user,
     })),
-    on(authActions.unauthenticated, (state) => ({
+    on(authActions.clearUser, (state) => ({
       ...state,
+      user: null,
       isAuthenticated: false,
-    }))
+    })),
   ),
-});
+})
 
 export const {
   name: authFeatureKey,
   reducer: authReducer,
   selectIsAuthenticated,
-} = authFeature;
+  selectUser,
+} = authFeature

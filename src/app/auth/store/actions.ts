@@ -1,9 +1,15 @@
-import {createActionGroup, emptyProps} from "@ngrx/store";
+import {createActionGroup, emptyProps, props} from '@ngrx/store'
+import {AuthData} from '../types/authData'
+import {UserCredential} from '@angular/fire/auth'
 
 export const authActions = createActionGroup({
-  source: "auth",
+  source: 'auth',
   events: {
-    authenticated: emptyProps(),
-    unauthenticated: emptyProps(),
+    register: props<{authData: AuthData}>(),
+    registerFailure: emptyProps(),
+    login: props<{authData: AuthData}>(),
+    logout: emptyProps(),
+    setUser: props<{user: UserCredential}>(),
+    clearUser: emptyProps(),
   },
-});
+})
