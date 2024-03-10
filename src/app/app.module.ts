@@ -13,6 +13,9 @@ import {provideStoreDevtools} from '@ngrx/store-devtools'
 import {MaterialModule} from './material.module'
 import {AuthService} from './auth/services/auth.service'
 import {AuthModule} from './auth/auth.module'
+import {provideEffects} from '@ngrx/effects'
+import * as authEffects from './auth/store/effects'
+import {provideRouterStore} from '@ngrx/router-store'
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +32,8 @@ import {AuthModule} from './auth/auth.module'
   providers: [
     provideStore(),
     provideState(authFeatureKey, authReducer),
+    provideEffects(authEffects),
+    provideRouterStore(),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),

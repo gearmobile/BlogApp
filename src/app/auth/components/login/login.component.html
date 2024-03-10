@@ -1,11 +1,5 @@
 <section>
-  <form
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    fxLayoutGap="10px"
-    [formGroup]="loginForm"
-    (ngSubmit)="onSubmit()"
-  >
+  <form class="auth-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <input
         type="email"
@@ -34,5 +28,6 @@
     >
       Submit
     </button>
+    <mat-error *ngIf="error$ | async as error">{{ error }}</mat-error>
   </form>
 </section>

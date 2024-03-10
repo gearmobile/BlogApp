@@ -1,6 +1,7 @@
-import {UserCredential} from '@angular/fire/auth'
+import {User} from '@angular/fire/auth'
 
 export interface AuthState {
-  user: UserCredential | null
+  user: User | null
   isAuthenticated: boolean
+  error: string | null
 }

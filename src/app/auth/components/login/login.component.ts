@@ -3,6 +3,7 @@ import {FormGroup, FormControl, Validators} from '@angular/forms'
 import {AuthData} from '../../types/authData'
 import {Store} from '@ngrx/store'
 import {authActions} from '../../store/actions'
+import {selectError} from '../../store/reducers'
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,8 @@ import {authActions} from '../../store/actions'
 })
 export class LoginComponent {
   store = inject(Store)
+
+  error$ = this.store.select(selectError)
 
   loginForm = new FormGroup({
     email: new FormControl('', {

@@ -1,2 +1,16 @@
-app works! <a routerLink="/login">Login</a>
-<router-outlet></router-outlet> asdasd
+<mat-toolbar style="gap: 10px; margin-bottom: 10px">
+  <span>BlogApp</span>
+  <span class="spacer"></span>
+
+  <ng-container *ngIf="user$ | async as user; else unauthenticated">
+    <mat-icon>person</mat-icon>
+    <p style="margin: 0">Welcome, {{ user.email }}</p>
+    <button (click)="logout()">Logout</button>
+  </ng-container>
+
+  <ng-template #unauthenticated>
+    <a routerLink="/login">Login</a>
+    <a routerLink="/register">Register</a>
+  </ng-template>
+</mat-toolbar>
+<router-outlet></router-outlet>

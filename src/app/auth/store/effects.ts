@@ -1,8 +1,9 @@
 import {inject} from '@angular/core'
-import {map, catchError, of, switchMap} from 'rxjs'
+import {map, catchError, of, switchMap, tap} from 'rxjs'
 import {AuthService} from '../services/auth.service'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
 import {authActions} from './actions'
+import {HttpErrorResponse} from '@angular/common/http'
 
 export const registerEffect = createEffect(
   (actions$ = inject(Actions), authService = inject(AuthService)) => {
@@ -10,12 +11,15 @@ export const registerEffect = createEffect(
       ofType(authActions.register),
       switchMap(({authData}) => {
         return authService.register(authData).pipe(
-          map((user) => authActions.setUser({user})),
-          catchError((error) => of(authActions.registerFailure())),
+          map(() => authActions.registerSuccess()),
+          catchError((error: HttpErrorResponse) =>
+            of(authActions.registerFailure({message: error.message}))
+          )
         )
-      }),
+      })
     )
   },
+  {functional: true}
 )
 
 export const loginEffect = createEffect(
@@ -24,21 +28,13 @@ export const loginEffect = createEffect(
       ofType(authActions.login),
       switchMap(({authData}) => {
         return authService.login(authData).pipe(
-          map((user) => authActions.setUser({user})),
-          catchError((error) => of(authActions.registerFailure())),
+          map(() => authActions.loginSuccess()),
+          catchError((error: HttpErrorResponse) =>
+            of(authActions.loginFailure({message: error.message}))
+          )
         )
-      }),
+      })
     )
   },
-)
-
-export const logoutEffect = createEffect(
-  (actions$ = inject(Actions), authService = inject(AuthService)) => {
-    return actions$.pipe(
-      ofType(authActions.logout),
-      switchMap(() => {
-        return authService.logout().pipe(map(() => authActions.clearUser()))
-      }),
-    )
-  },
+  {functional: true}
 )
