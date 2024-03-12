@@ -16,6 +16,10 @@ import {AuthModule} from './auth/auth.module'
 import {provideEffects} from '@ngrx/effects'
 import * as authEffects from './auth/store/effects'
 import {provideRouterStore} from '@ngrx/router-store'
+import {
+  spinnerFeatureKey,
+  spinnerReducer,
+} from './shared/spinner/store/reducers'
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +36,7 @@ import {provideRouterStore} from '@ngrx/router-store'
   providers: [
     provideStore(),
     provideState(authFeatureKey, authReducer),
+    provideState(spinnerFeatureKey, spinnerReducer),
     provideEffects(authEffects),
     provideRouterStore(),
     provideStoreDevtools({

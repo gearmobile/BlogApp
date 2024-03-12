@@ -15,6 +15,8 @@ export class LoginComponent {
 
   error$ = this.store.select(selectError)
 
+  spinnerName = 'login-spinner'
+
   loginForm = new FormGroup({
     email: new FormControl('', {
       validators: [Validators.required, Validators.email],
@@ -27,6 +29,8 @@ export class LoginComponent {
       email: this.loginForm.get('email')?.value!,
       password: this.loginForm.get('password')?.value!,
     }
-    this.store.dispatch(authActions.login({authData}))
+    this.store.dispatch(
+      authActions.login({authData: authData, spinnerName: this.spinnerName})
+    )
   }
 }

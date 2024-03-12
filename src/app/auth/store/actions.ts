@@ -9,7 +9,7 @@ export const authActions = createActionGroup({
     registerSuccess: emptyProps(),
     registerFailure: props<{message: string}>(),
 
-    login: props<{authData: AuthData}>(),
+    login: props<{authData: AuthData; spinnerName: string}>(),
     loginSuccess: emptyProps(),
     loginFailure: props<{message: string}>(),
 
