@@ -13,6 +13,9 @@ export class SpinnerComponent implements OnInit {
   @Input()
   spinnerName!: string
 
+  @Input()
+  fullscreen = true
+
   spinner$!: Observable<boolean>
 
   constructor(private store: Store) {}

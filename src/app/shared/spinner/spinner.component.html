@@ -1,1 +1,3 @@
-<mat-progress-spinner *ngIf="spinner$ | async"></mat-progress-spinner> EO
+<div [ngClass]="{'spinner-overlay': fullscreen}" *ngIf="spinner$ | async">
+  <mat-spinner [ngClass]="{'fullscreen-spinner': fullscreen}"></mat-spinner>
+</div>
