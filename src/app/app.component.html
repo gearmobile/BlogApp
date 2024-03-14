@@ -4,13 +4,13 @@
 
   <ng-container *ngIf="user$ | async as user; else unauthenticated">
     <mat-icon>person</mat-icon>
-    <p style="margin: 0">Welcome, {{ user.email }}</p>
-    <button (click)="logout()">Logout</button>
+    <p style="margin: 0">{{ user.email }}</p>
+    <button mat-flat-button color="accent" (click)="logout()">Logout</button>
   </ng-container>
 
   <ng-template #unauthenticated>
-    <a routerLink="/login">Login</a>
-    <a routerLink="/register">Register</a>
+    <a routerLink="/login" mat-button>Login</a>
+    <a routerLink="/register" mat-button>Register</a>
   </ng-template>
 </mat-toolbar>
 <router-outlet></router-outlet>

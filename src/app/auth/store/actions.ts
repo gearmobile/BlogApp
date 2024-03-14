@@ -5,7 +5,7 @@ import {User} from '@angular/fire/auth'
 export const authActions = createActionGroup({
   source: 'auth',
   events: {
-    register: props<{authData: AuthData}>(),
+    register: props<{authData: AuthData; spinnerName: string}>(),
     registerSuccess: emptyProps(),
     registerFailure: props<{message: string}>(),
 

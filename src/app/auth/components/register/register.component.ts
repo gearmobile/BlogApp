@@ -15,6 +15,8 @@ export class RegisterComponent {
 
   error$ = this.store.select(selectError)
 
+  spinnerName = 'register-spinner'
+
   registerForm = new FormGroup({
     email: new FormControl('', {
       validators: [Validators.required, Validators.email],
@@ -27,6 +29,8 @@ export class RegisterComponent {
       email: this.registerForm.get('email')?.value!,
       password: this.registerForm.get('password')?.value!,
     }
-    this.store.dispatch(authActions.register({authData}))
+    this.store.dispatch(
+      authActions.register({authData, spinnerName: this.spinnerName})
+    )
   }
 }

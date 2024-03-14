@@ -9,11 +9,16 @@ import {Store} from '@ngrx/store'
 import {withSpinner} from '../../shared/operators/with-spinner.operator'
 
 export const registerEffect = createEffect(
-  (actions$ = inject(Actions), authService = inject(AuthService)) => {
+  (
+    store = inject(Store),
+    actions$ = inject(Actions),
+    authService = inject(AuthService)
+  ) => {
     return actions$.pipe(
       ofType(authActions.register),
-      switchMap(({authData}) => {
+      switchMap(({authData, spinnerName}) => {
         return authService.register(authData).pipe(
+          withSpinner(spinnerName, store),
           map(() => authActions.registerSuccess()),
           catchError((error: HttpErrorResponse) =>
             of(authActions.registerFailure({message: error.message}))

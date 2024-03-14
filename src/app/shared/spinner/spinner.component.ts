@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core'
 import {Store} from '@ngrx/store'
 import {getSpinnerState} from './store/selectors'
 import {spinnerActions} from './store/actions'
-import {Observable, tap} from 'rxjs'
+import {Observable} from 'rxjs'
 
 @Component({
   selector: 'app-spinner',
@@ -24,8 +24,6 @@ export class SpinnerComponent implements OnInit {
     this.store.dispatch(
       spinnerActions.addSpinner({spinnerName: this.spinnerName})
     )
-    this.spinner$ = this.store
-      .select(getSpinnerState(this.spinnerName))
-      .pipe(tap(console.log))
+    this.spinner$ = this.store.select(getSpinnerState(this.spinnerName))
   }
 }
