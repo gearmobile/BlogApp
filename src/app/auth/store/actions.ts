@@ -1,15 +1,15 @@
 import {createActionGroup, emptyProps, props} from '@ngrx/store'
-import {AuthData} from '../types/authData'
+import {AuthRequest} from '../types/authRequest'
 import {User} from '@angular/fire/auth'
 
 export const authActions = createActionGroup({
   source: 'auth',
   events: {
-    register: props<{authData: AuthData; spinnerName: string}>(),
+    register: props<{authData: AuthRequest; spinnerName: string}>(),
     registerSuccess: emptyProps(),
     registerFailure: props<{message: string}>(),
 
-    login: props<{authData: AuthData; spinnerName: string}>(),
+    login: props<{authData: AuthRequest; spinnerName: string}>(),
     loginSuccess: emptyProps(),
     loginFailure: props<{message: string}>(),
 

@@ -7,7 +7,7 @@ import {
   signOut,
   user,
 } from '@angular/fire/auth'
-import {AuthData} from '../types/authData'
+import {AuthRequest} from '../types/authRequest'
 import {Observable, from} from 'rxjs'
 import {User} from 'firebase/auth'
 import {Store} from '@ngrx/store'
@@ -18,7 +18,7 @@ export class AuthService {
   private auth = inject(Auth)
   private store = inject(Store)
 
-  register(authData: AuthData): Observable<UserCredential> {
+  register(authData: AuthRequest): Observable<UserCredential> {
     return from(
       createUserWithEmailAndPassword(
         this.auth,
@@ -28,7 +28,7 @@ export class AuthService {
     )
   }
 
-  login(authData: AuthData): Observable<UserCredential> {
+  login(authData: AuthRequest): Observable<UserCredential> {
     return from(
       signInWithEmailAndPassword(this.auth, authData.email, authData.password)
     )

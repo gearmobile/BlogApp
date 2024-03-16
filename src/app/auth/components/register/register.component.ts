@@ -2,7 +2,7 @@ import {Component, inject} from '@angular/core'
 import {FormGroup, FormControl, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {authActions} from '../../store/actions'
-import {AuthData} from '../../types/authData'
+import {AuthRequest} from '../../types/authRequest'
 import {selectError} from '../../store/reducers'
 
 @Component({
@@ -25,7 +25,7 @@ export class RegisterComponent {
   })
 
   onSubmit() {
-    const authData: AuthData = {
+    const authData: AuthRequest = {
       email: this.registerForm.get('email')?.value!,
       password: this.registerForm.get('password')?.value!,
     }

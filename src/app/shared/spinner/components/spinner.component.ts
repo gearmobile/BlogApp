@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core'
 import {Store} from '@ngrx/store'
-import {getSpinnerState} from './store/selectors'
-import {spinnerActions} from './store/actions'
+import {getSpinnerState} from '../store/selectors'
+import {spinnerActions} from '../store/actions'
 import {Observable} from 'rxjs'
 
 @Component({

@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core'
 import {FormGroup, FormControl, Validators} from '@angular/forms'
-import {AuthData} from '../../types/authData'
+import {AuthRequest} from '../../types/authRequest'
 import {Store} from '@ngrx/store'
 import {authActions} from '../../store/actions'
 import {selectError} from '../../store/reducers'
@@ -25,7 +25,7 @@ export class LoginComponent {
   })
 
   onSubmit() {
-    const authData: AuthData = {
+    const authData: AuthRequest = {
       email: this.loginForm.get('email')?.value!,
       password: this.loginForm.get('password')?.value!,
     }
