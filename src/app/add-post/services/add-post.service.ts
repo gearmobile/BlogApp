@@ -6,7 +6,7 @@ import {
   addDoc,
   collection,
 } from '@angular/fire/firestore'
-import {from} from 'rxjs'
+import {Observable, from} from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
@@ -18,11 +18,11 @@ export class AddPostService {
     'posts'
   )
 
-  addPost(post: AddPostRequest): void {
-    this.addDataToDatabase()
+  addPost(): Observable<any> {
+    return this.addDataToDatabase()
   }
 
-  private addDataToDatabase() {
-    from(addDoc(this.postsCollection, {title: 'Test'} as AddPostRequest))
+  private addDataToDatabase(): Observable<any> {
+    return from(addDoc(this.postsCollection, {title: 'Test'} as AddPostRequest))
   }
 }
