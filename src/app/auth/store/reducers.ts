@@ -5,7 +5,7 @@ import {routerNavigationAction} from '@ngrx/router-store'
 
 const initialState: AuthState = {
   user: null,
-  isAuthenticated: false,
+  isAuthenticated: undefined,
   error: null,
 }
 

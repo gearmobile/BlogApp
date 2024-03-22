@@ -10,7 +10,6 @@ import {getAuth, provideAuth} from '@angular/fire/auth'
 import {provideState, provideStore} from '@ngrx/store'
 import {authFeatureKey, authReducer} from './auth/store/reducers'
 import {provideStoreDevtools} from '@ngrx/store-devtools'
-import {MaterialModule} from './material.module'
 import {AuthService} from './auth/services/auth.service'
 import {AuthModule} from './auth/auth.module'
 import {provideEffects} from '@ngrx/effects'
@@ -20,6 +19,7 @@ import {
   spinnerFeatureKey,
   spinnerReducer,
 } from './shared/spinner/store/reducers'
+import {SharedModule} from './shared/shared.module'
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +30,7 @@ import {
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    MaterialModule,
+    SharedModule,
     AuthModule,
   ],
   providers: [

@@ -1,5 +1,5 @@
 import {Store} from '@ngrx/store'
-import {Observable, defer, finalize} from 'rxjs'
+import {Observable, defer, finalize, take} from 'rxjs'
 import {spinnerActions} from '../spinner/store/actions'
 
 export const withSpinner =

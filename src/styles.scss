@@ -9,7 +9,11 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
-.auth-form {
+.w-100 {
+  width: 100%;
+}
+
+.basic-form {
   display: flex;
   gap: 10px;
   flex-direction: column;
