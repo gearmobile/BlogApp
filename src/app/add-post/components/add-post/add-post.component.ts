@@ -23,7 +23,6 @@ export class AddPostComponent {
 
   addPost(): void {
     const post = this.postForm.getRawValue() as AddPostRequest
-
     this.store.dispatch(
       addPostActions.addPost({post, spinnerName: this.spinnerName})
     )

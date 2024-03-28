@@ -2,10 +2,11 @@ import {HttpErrorResponse} from '@angular/common/http'
 import {inject} from '@angular/core'
 import {createEffect, Actions, ofType} from '@ngrx/effects'
 import {Store} from '@ngrx/store'
-import {switchMap, map, catchError, of} from 'rxjs'
+import {switchMap, map, catchError, of, withLatestFrom} from 'rxjs'
 import {withSpinner} from 'src/app/shared/operators/with-spinner.operator'
 import {AddPostService} from '../services/add-post.service'
 import {addPostActions} from './actions'
+import {selectUser} from 'src/app/auth/store/reducers'
 
 export const addPostEffect = createEffect(
   (
@@ -15,8 +16,15 @@ export const addPostEffect = createEffect(
   ) => {
     return actions$.pipe(
       ofType(addPostActions.addPost),
-      switchMap(({post, spinnerName}) => {
-        return addPostService.addPost().pipe(
+      withLatestFrom(store.select(selectUser)),
+      switchMap(([action, user]) => {
+        const {post, spinnerName} = action
+        if (!user || !user.uid) {
+          return of(
+            addPostActions.addPostFailure({message: 'User ID is missing'})
+          )
+        }
+        return addPostService.addPost(post, user.uid).pipe(
           withSpinner(spinnerName, store),
           map(() => addPostActions.addPostSuccess()),
           catchError((error: HttpErrorResponse) =>

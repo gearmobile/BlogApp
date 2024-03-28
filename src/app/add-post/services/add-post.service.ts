@@ -18,11 +18,9 @@ export class AddPostService {
     'posts'
   )
 
-  addPost(): Observable<any> {
-    return this.addDataToDatabase()
-  }
-
-  private addDataToDatabase(): Observable<any> {
-    return from(addDoc(this.postsCollection, {title: 'Test'} as AddPostRequest))
+  addPost(post: AddPostRequest, userId: string): Observable<any> {
+    return from(
+      addDoc(this.postsCollection, {...post, userId} as AddPostRequest)
+    )
   }
 }
