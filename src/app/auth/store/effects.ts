@@ -6,7 +6,7 @@ import {authActions} from './actions'
 import {HttpErrorResponse} from '@angular/common/http'
 import {Router} from '@angular/router'
 import {Store} from '@ngrx/store'
-import {withSpinner} from '../../shared/operators/with-spinner.operator'
+import {withSpinner} from '../../shared/spinner/operators/with-spinner.operator'
 
 export const registerEffect = createEffect(
   (

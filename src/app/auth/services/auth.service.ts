@@ -12,7 +12,7 @@ import {Observable, from, skip, take} from 'rxjs'
 import {User} from 'firebase/auth'
 import {Store} from '@ngrx/store'
 import {authActions} from '../store/actions'
-import {withSpinner} from 'src/app/shared/operators/with-spinner.operator'
+import {withSpinner} from 'src/app/shared/spinner/operators/with-spinner.operator'
 
 @Injectable()
 export class AuthService {

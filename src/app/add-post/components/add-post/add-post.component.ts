@@ -3,6 +3,7 @@ import {Store} from '@ngrx/store'
 import {addPostActions} from '../../store/actions'
 import {AddPostRequest} from '../../types/addPostRequest'
 import {FormControl, FormGroup, Validators} from '@angular/forms'
+import {ToastService} from 'src/app/shared/toast/services/toast.service'
 
 @Component({
   selector: 'app-add-post',
@@ -11,6 +12,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms'
 })
 export class AddPostComponent {
   store = inject(Store)
+
+  toastService = inject(ToastService)
 
   spinnerName = 'add-post-spinner'
 
