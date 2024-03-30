@@ -2,6 +2,7 @@ import {Component, inject} from '@angular/core'
 import {Store} from '@ngrx/store'
 import {selectUser} from './auth/store/reducers'
 import {AuthService} from './auth/services/auth.service'
+import {authActions} from './auth/store/actions'
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,6 @@ export class AppComponent {
   }
 
   logout() {
-    this.authService.logout()
+    this.store.dispatch(authActions.logout())
   }
 }

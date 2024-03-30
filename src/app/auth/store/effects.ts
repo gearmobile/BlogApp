@@ -7,6 +7,7 @@ import {HttpErrorResponse} from '@angular/common/http'
 import {Router} from '@angular/router'
 import {Store} from '@ngrx/store'
 import {withSpinner} from '../../shared/spinner/operators/with-spinner.operator'
+import {ToastService} from 'src/app/shared/toast/services/toast.service'
 
 export const registerEffect = createEffect(
   (
@@ -70,6 +71,37 @@ export const redirectAfterRegisterEffect = createEffect(
       ofType(authActions.registerSuccess),
       tap(() => {
         router.navigateByUrl('/')
+      })
+    )
+  },
+  {functional: true, dispatch: false}
+)
+
+export const redirectAfterClearUser = createEffect(
+  (actions$ = inject(Actions), router = inject(Router)) => {
+    return actions$.pipe(
+      ofType(authActions.clearUser),
+      tap(() => {
+        router.navigateByUrl('/')
+      })
+    )
+  },
+  {functional: true, dispatch: false}
+)
+
+export const logoutEffect = createEffect(
+  (
+    actions$ = inject(Actions),
+    toastService = inject(ToastService),
+    authService = inject(AuthService)
+  ) => {
+    return actions$.pipe(
+      ofType(authActions.logout),
+      switchMap(() => {
+        return authService.logout()
+      }),
+      tap(() => {
+        toastService.openInfoToast('You have been logged out')
       })
     )
   },

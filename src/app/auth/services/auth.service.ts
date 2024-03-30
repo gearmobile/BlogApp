@@ -48,6 +48,14 @@ export class AuthService {
       })
   }
 
+  private continueAuthListener(): void {
+    user(this.auth)
+      .pipe(skip(1))
+      .subscribe((user: User | null) => {
+        this.handleUserState(user)
+      })
+  }
+
   private handleUserState(user: User | null): void {
     if (user) {
       this.store.dispatch(
@@ -56,13 +64,5 @@ export class AuthService {
     } else {
       this.store.dispatch(authActions.clearUser())
     }
-  }
-
-  private continueAuthListener(): void {
-    user(this.auth)
-      .pipe(skip(1))
-      .subscribe((user: User | null) => {
-        this.handleUserState(user)
-      })
   }
 }

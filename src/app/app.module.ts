@@ -20,7 +20,6 @@ import {
   spinnerReducer,
 } from './shared/spinner/store/reducers'
 import {SharedModule} from './shared/shared.module'
-import * as toastEffects from './shared/toast/store/effects'
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,7 +37,6 @@ import * as toastEffects from './shared/toast/store/effects'
     provideStore(),
     provideState(authFeatureKey, authReducer),
     provideState(spinnerFeatureKey, spinnerReducer),
-    provideEffects(toastEffects),
     provideEffects(authEffects),
     provideRouterStore(),
     provideStoreDevtools({
