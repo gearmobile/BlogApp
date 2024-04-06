@@ -20,6 +20,7 @@ import {
   spinnerReducer,
 } from './shared/spinner/store/reducers'
 import {SharedModule} from './shared/shared.module'
+import {FeedModule} from './feed/feed.module'
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +33,7 @@ import {SharedModule} from './shared/shared.module'
     AppRoutingModule,
     SharedModule,
     AuthModule,
+    FeedModule,
   ],
   providers: [
     provideStore(),

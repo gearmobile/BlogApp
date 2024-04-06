@@ -25,7 +25,7 @@ export const addPostEffect = createEffect(
             addPostActions.addPostFailure({message: 'User ID is missing'})
           )
         }
-        return addPostService.addPost(post, user.uid).pipe(
+        return addPostService.addPost(post, user.uid, user.email ?? '').pipe(
           withSpinner(spinnerName, store),
           map(() => addPostActions.addPostSuccess()),
           catchError((error: HttpErrorResponse) =>
