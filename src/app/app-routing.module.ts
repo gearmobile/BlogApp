@@ -8,11 +8,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./add-post/add-post.module').then((m) => m.AddPostModule),
     canActivate: [AuthGuard],
+    canMatch: [AuthGuard],
   },
   {
     path: 'feed',
     loadChildren: () => import('./feed/feed.module').then((m) => m.FeedModule),
     canActivate: [() => true],
+    canMatch: [() => true],
   },
 ]
 

@@ -1,5 +1,5 @@
 <mat-toolbar style="gap: 10px; margin-bottom: 10px">
-  <span>BlogApp</span>
+  <span style="cursor: pointer" routerLink="/">BlogApp</span>
   <ng-container *ngIf="user$ | async">
     <a routerLink="/add-post" mat-flat-button color="primary">Add post</a>
   </ng-container>

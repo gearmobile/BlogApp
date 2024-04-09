@@ -1,7 +1,12 @@
 import {Injectable, inject} from '@angular/core'
-import {Observable, map, tap} from 'rxjs'
+import {Observable, map} from 'rxjs'
+import {
+  DocumentData,
+  Firestore,
+  collection,
+  collectionData,
+} from '@angular/fire/firestore'
 import {Post} from '../types/post'
-import {Firestore, collection, collectionData} from '@angular/fire/firestore'
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +16,19 @@ export class FeedService {
 
   getFeed(): Observable<Post[]> {
     return collectionData(collection(this.firestore, 'posts')).pipe(
-      tap(console.log)
+      map((documents: DocumentData[]) =>
+        documents.map((doc: DocumentData) => this.mapDocumentToPost(doc))
+      )
     )
+  }
+
+  private mapDocumentToPost(doc: DocumentData): Post {
+    return {
+      id: doc['id'],
+      userId: doc['userId'],
+      title: doc['title'],
+      content: doc['content'],
+      userEmail: doc['userEmail'],
+    }
   }
 }

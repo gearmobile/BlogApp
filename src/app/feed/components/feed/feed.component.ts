@@ -1,5 +1,7 @@
 import {Component, inject} from '@angular/core'
-import {FeedService} from '../../services/feed.service'
+import {Store} from '@ngrx/store'
+import {feedActions} from '../../store/actions'
+import {selectPosts} from '../../store/reducers'
 
 @Component({
   selector: 'app-feed',
@@ -7,10 +9,12 @@ import {FeedService} from '../../services/feed.service'
   styleUrls: ['./feed.component.scss'],
 })
 export class FeedComponent {
-  private feedService = inject(FeedService)
+  store = inject(Store)
+  spinnerName = 'feed-spinner'
+
+  posts$ = this.store.select(selectPosts)
 
   ngOnInit() {
-    console.log('hello from feed')
-    this.feedService.getFeed().subscribe()
+    this.store.dispatch(feedActions.getFeed({spinnerName: this.spinnerName}))
   }
 }

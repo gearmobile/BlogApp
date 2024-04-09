@@ -1,6 +1,6 @@
 import {createFeature, createReducer, on} from '@ngrx/store'
-import {routerNavigationAction} from '@ngrx/router-store'
 import {FeedState} from '../types/feedState'
+import {feedActions} from './actions'
 
 const initialState: FeedState = {
   posts: null,
@@ -10,18 +10,26 @@ const initialState: FeedState = {
 const feedFeature = createFeature({
   name: 'feed',
   reducer: createReducer(
-    initialState
-    // on(authActions.setUser, (state, {user}) => ({
-    //   ...state,
-    //   user,
-    //   isAuthenticated: !!user,
-    //   error: null,
-    // })),
+    initialState,
+    on(feedActions.getFeed, (state) => ({
+      ...state,
+    })),
+    on(feedActions.getFeedSuccess, (state, action) => ({
+      ...state,
+      posts: action.posts,
+      error: null,
+    })),
+    on(feedActions.getFeedFailure, (state, action) => ({
+      ...state,
+      posts: null,
+      error: action.message,
+    }))
   ),
 })
 
 export const {
   name: feedFeatureKey,
   reducer: feedReducer,
+  selectPosts,
   selectError,
 } = feedFeature
