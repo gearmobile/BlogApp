@@ -8,8 +8,8 @@ export const withSpinner =
     defer(() => {
       store.dispatch(spinnerActions.startSpinner({spinnerName}))
       return source.pipe(
-        finalize(() =>
+        finalize(() => {
           store.dispatch(spinnerActions.stopSpinner({spinnerName}))
-        )
+        })
       )
     })

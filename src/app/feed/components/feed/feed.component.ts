@@ -1,7 +1,11 @@
 import {Component, inject} from '@angular/core'
 import {Store} from '@ngrx/store'
 import {feedActions} from '../../store/actions'
-import {selectPosts} from '../../store/reducers'
+import {
+  selectHasMorePostsBackward,
+  selectHasMorePostsForward,
+  selectPosts,
+} from '../../store/reducers'
 
 @Component({
   selector: 'app-feed',
@@ -13,8 +17,22 @@ export class FeedComponent {
   spinnerName = 'feed-spinner'
 
   posts$ = this.store.select(selectPosts)
+  hasMorePostsForward$ = this.store.select(selectHasMorePostsForward)
+  hasMorePostsBackward$ = this.store.select(selectHasMorePostsBackward)
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.store.dispatch(feedActions.getFeed({spinnerName: this.spinnerName}))
+  }
+
+  getNextPage() {
+    this.store.dispatch(
+      feedActions.getNextPage({spinnerName: this.spinnerName})
+    )
+  }
+
+  getPreviousPage() {
+    this.store.dispatch(
+      feedActions.getPreviousPage({spinnerName: this.spinnerName})
+    )
   }
 }

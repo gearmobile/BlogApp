@@ -3,4 +3,5 @@ export interface AddPostRequest {
   content: string
   userId: string
   userEmail: string
+  createdAt: Date
 }

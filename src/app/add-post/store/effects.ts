@@ -8,6 +8,7 @@ import {AddPostService} from '../services/add-post.service'
 import {addPostActions} from './actions'
 import {selectUser} from 'src/app/auth/store/reducers'
 import {ToastService} from 'src/app/shared/toast/services/toast.service'
+import {AddPostRequest} from '../types/addPostRequest'
 
 export const addPostEffect = createEffect(
   (
@@ -25,13 +26,20 @@ export const addPostEffect = createEffect(
             addPostActions.addPostFailure({message: 'User ID is missing'})
           )
         }
-        return addPostService.addPost(post, user.uid, user.email ?? '').pipe(
-          withSpinner(spinnerName, store),
-          map(() => addPostActions.addPostSuccess()),
-          catchError((error: HttpErrorResponse) =>
-            of(addPostActions.addPostFailure({message: error.message}))
+        return addPostService
+          .addPost({
+            ...post,
+            userId: user.uid,
+            userEmail: user.email ?? '',
+            createdAt: new Date(),
+          } as AddPostRequest)
+          .pipe(
+            withSpinner(spinnerName, store),
+            map(() => addPostActions.addPostSuccess()),
+            catchError((error: HttpErrorResponse) =>
+              of(addPostActions.addPostFailure({message: error.message}))
+            )
           )
-        )
       })
     )
   },

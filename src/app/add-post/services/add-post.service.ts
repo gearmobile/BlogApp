@@ -18,17 +18,7 @@ export class AddPostService {
     'posts'
   )
 
-  addPost(
-    post: AddPostRequest,
-    userId: string,
-    userEmail: string
-  ): Observable<any> {
-    return from(
-      addDoc(this.postsCollection, {
-        ...post,
-        userId,
-        userEmail,
-      } as AddPostRequest)
-    )
+  addPost(post: AddPostRequest): Observable<any> {
+    return from(addDoc(this.postsCollection, post))
   }
 }
