@@ -1,50 +1,48 @@
 import {TestBed} from '@angular/core/testing'
-import {Firestore, collection, addDoc} from '@angular/fire/firestore'
+import {Firestore} from '@angular/fire/firestore'
 import {AddPostService} from './add-post.service'
-import {Observable, of} from 'rxjs'
 import {AddPostRequest} from '../types/addPostRequest'
-import * as AngularFireModule from '@angular/fire/firestore'
+import {lastValueFrom, of} from 'rxjs'
 
-jest.mock('@angular/fire/firestore')
+jest.mock('@angular/fire/firestore', () => {
+  return {
+    Firestore: jest.fn().mockImplementation(() => ({})), // Mock constructor if needed
+    collection: jest.fn((firestore, collectionName) => ({
+      add: jest.fn().mockResolvedValue({id: 'abc123'}), // Mocking `addDoc`
+    })),
+    addDoc: jest.fn((collectionRef, postData) =>
+      Promise.resolve({id: 'abc123'})
+    ), // You may need to adjust based on actual usage
+  }
+})
 
-// Mock Firestore
-const firestoreMock = {
-  collection: jest.fn(),
-}
-
-// Mock Firestore collection reference
-const collectionMock = {
-  addDoc: jest.fn(),
-}
-
-// Sample post data for testing
-const samplePost: AddPostRequest = {
-  title: 'Test Post',
-  content: 'This is a test post.',
+const post = {
+  title: 'asdas',
+  content: 'asdas',
+  userId: 'asdas',
+  userEmail: 'asdas@asda.com',
   createdAt: new Date(),
-  userId: 'aaaaajjsektj',
-  userEmail: 'userEmail@email.com',
-}
+} as AddPostRequest
 
 describe('AddPostService', () => {
   let addPostService: AddPostService
-  let firestore: Firestore
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        AddPostService,
-        {provide: Firestore, useValue: firestoreMock},
-      ],
+      providers: [AddPostService, {provide: Firestore, useValue: jest.fn()}],
     })
     addPostService = TestBed.inject(AddPostService)
-    firestore = TestBed.inject(Firestore)
-
-    // Mock Firestore methods
-    ;(firestoreMock.collection as jest.Mock).mockReturnValue(collectionMock)
   })
 
   it('should be created', () => {
     expect(addPostService).toBeTruthy()
+  })
+
+  it('should add post', async () => {
+    addPostService.addPost(post)
+    const result = await lastValueFrom(addPostService.addPost(post))
+
+    // Check the result of the Observable returned by the service
+    expect(result).toEqual({id: 'abc123'})
   })
 })
