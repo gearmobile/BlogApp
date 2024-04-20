@@ -2,17 +2,17 @@ import {TestBed} from '@angular/core/testing'
 import {Firestore} from '@angular/fire/firestore'
 import {AddPostService} from './add-post.service'
 import {AddPostRequest} from '../types/addPostRequest'
-import {lastValueFrom, of} from 'rxjs'
+import {lastValueFrom} from 'rxjs'
 
 jest.mock('@angular/fire/firestore', () => {
   return {
-    Firestore: jest.fn().mockImplementation(() => ({})), // Mock constructor if needed
+    Firestore: jest.fn().mockImplementation(() => ({})),
     collection: jest.fn((firestore, collectionName) => ({
-      add: jest.fn().mockResolvedValue({id: 'abc123'}), // Mocking `addDoc`
+      add: jest.fn().mockResolvedValue({id: 'abc123'}),
     })),
     addDoc: jest.fn((collectionRef, postData) =>
       Promise.resolve({id: 'abc123'})
-    ), // You may need to adjust based on actual usage
+    ),
   }
 })
 
