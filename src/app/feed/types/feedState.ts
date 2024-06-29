@@ -6,4 +6,5 @@ export interface FeedState {
   hasMorePostsForward: boolean
   hasMorePostsBackward: boolean
   initialCursorId: string | null
+  page: number
 }

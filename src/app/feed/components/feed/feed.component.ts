@@ -4,6 +4,7 @@ import {feedActions} from '../../store/actions'
 import {
   selectHasMorePostsBackward,
   selectHasMorePostsForward,
+  selectPage,
   selectPosts,
 } from '../../store/reducers'
 
@@ -17,6 +18,7 @@ export class FeedComponent {
   spinnerName = 'feed-spinner'
 
   posts$ = this.store.select(selectPosts)
+  page$ = this.store.select(selectPage)
   hasMorePostsForward$ = this.store.select(selectHasMorePostsForward)
   hasMorePostsBackward$ = this.store.select(selectHasMorePostsBackward)
 

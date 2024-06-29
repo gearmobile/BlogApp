@@ -2,7 +2,7 @@
   <div
     style="
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       margin-bottom: 10px;
     "
@@ -14,6 +14,7 @@
     >
       <mat-icon>keyboard_arrow_left</mat-icon>
     </button>
+    <span>PAGE {{ page$ | async }}</span>
     <button
       mat-icon-button
       (click)="getNextPage()"
@@ -22,6 +23,9 @@
       <mat-icon>keyboard_arrow_right</mat-icon>
     </button>
   </div>
+</div>
+
+<div style="display: flex; flex-direction: column">
   <mat-card
     *ngFor="let post of posts$ | async"
     style="margin-bottom: 5px; box-shadow: none; padding: 5px"

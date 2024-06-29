@@ -8,6 +8,7 @@ const initialState: FeedState = {
   hasMorePostsForward: true,
   hasMorePostsBackward: false,
   initialCursorId: null,
+  page: 1,
 }
 
 const feedFeature = createFeature({
@@ -33,9 +34,11 @@ const feedFeature = createFeature({
     })),
     on(feedActions.getNextPage, (state) => ({
       ...state,
+      page: state.page + 1,
     })),
     on(feedActions.getPreviousPage, (state) => ({
       ...state,
+      page: state.page - 1,
     })),
     on(feedActions.storeInitialCursorId, (state, action) => ({
       ...state,
@@ -52,6 +55,7 @@ export const {
   selectHasMorePostsForward,
   selectHasMorePostsBackward,
   selectInitialCursorId,
+  selectPage,
 } = feedFeature
 
 export const selectLastPost = createSelector(selectPosts, (posts) => {
