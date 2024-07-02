@@ -1,40 +1,34 @@
-import {Component, inject} from '@angular/core'
-import {Store} from '@ngrx/store'
-import {feedActions} from '../../store/actions'
-import {
-  selectHasMorePostsBackward,
-  selectHasMorePostsForward,
-  selectPage,
-  selectPosts,
-} from '../../store/reducers'
+import { AfterViewInit, Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { feedActions } from '../../store/actions';
+import { selectHasMorePostsBackward, selectHasMorePostsForward, selectPage, selectPosts } from '../../store/reducers';
 
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
-  styleUrls: ['./feed.component.scss'],
 })
-export class FeedComponent {
-  store = inject(Store)
-  spinnerName = 'feed-spinner'
+export class FeedComponent implements AfterViewInit {
+  public readonly store = inject(Store);
+  public readonly spinnerName = 'feed-spinner';
 
-  posts$ = this.store.select(selectPosts)
-  page$ = this.store.select(selectPage)
-  hasMorePostsForward$ = this.store.select(selectHasMorePostsForward)
-  hasMorePostsBackward$ = this.store.select(selectHasMorePostsBackward)
+  public readonly posts$ = this.store.select(selectPosts);
+  public readonly page$ = this.store.select(selectPage);
+  public readonly hasMorePostsForward$ = this.store.select(selectHasMorePostsForward);
+  public readonly hasMorePostsBackward$ = this.store.select(selectHasMorePostsBackward);
 
-  ngAfterViewInit() {
-    this.store.dispatch(feedActions.getFeed({spinnerName: this.spinnerName}))
+  ngAfterViewInit(): void {
+    this.store.dispatch(feedActions.getFeed({ spinnerName: this.spinnerName }));
   }
 
-  getNextPage() {
+  public getNextPage(): void {
     this.store.dispatch(
-      feedActions.getNextPage({spinnerName: this.spinnerName})
-    )
+      feedActions.getNextPage({ spinnerName: this.spinnerName })
+    );
   }
 
-  getPreviousPage() {
+  public getPreviousPage(): void {
     this.store.dispatch(
-      feedActions.getPreviousPage({spinnerName: this.spinnerName})
-    )
+      feedActions.getPreviousPage({ spinnerName: this.spinnerName })
+    );
   }
 }

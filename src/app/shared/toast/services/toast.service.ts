@@ -1,26 +1,25 @@
-import {Injectable, inject} from '@angular/core'
-import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar'
+import { inject, Injectable } from '@angular/core';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ToastService {
-  private readonly DEFAULT_DURATION = 3000
+  private readonly DEFAULT_DURATION = 3000;
+  private readonly snackBar = inject(MatSnackBar);
 
-  private snackBar = inject(MatSnackBar)
-
-  openSuccessToast(message: string) {
+  public openSuccessToast(message: string): void {
     const config = {
       duration: this.DEFAULT_DURATION,
-      panelClass: 'app-notification-success',
-    } as MatSnackBarConfig
-    this.snackBar.open(message, undefined, config)
+      panelClass: 'app-notification-success'
+    } as MatSnackBarConfig;
+    this.snackBar.open(message, undefined, config);
   }
 
-  openInfoToast(message: string) {
+  public openInfoToast(message: string): void {
     const config = {
-      duration: this.DEFAULT_DURATION,
-    } as MatSnackBarConfig
-    this.snackBar.open(message, undefined, config)
+      duration: this.DEFAULT_DURATION
+    } as MatSnackBarConfig;
+    this.snackBar.open(message, undefined, config);
   }
 }

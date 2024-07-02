@@ -1,24 +1,19 @@
-import {Injectable, inject} from '@angular/core'
-import {AddPostRequest} from '../types/addPostRequest'
-import {
-  CollectionReference,
-  Firestore,
-  addDoc,
-  collection,
-} from '@angular/fire/firestore'
-import {Observable, from} from 'rxjs'
+import { inject, Injectable } from '@angular/core';
+import { AddPostRequestInterface } from '../types/addPostRequest.interface';
+import { addDoc, collection, CollectionReference, Firestore } from '@angular/fire/firestore';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AddPostService {
-  private firestore: Firestore = inject(Firestore)
-  private postsCollection: CollectionReference = collection(
+  private readonly firestore: Firestore = inject(Firestore);
+  private readonly postsCollection: CollectionReference = collection(
     this.firestore,
     'posts'
-  )
+  );
 
-  addPost(post: AddPostRequest): Observable<any> {
-    return from(addDoc(this.postsCollection, post))
+  public addPost(post: AddPostRequestInterface): Observable<any> {
+    return from(addDoc(this.postsCollection, post));
   }
 }

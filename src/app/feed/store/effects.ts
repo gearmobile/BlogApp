@@ -1,18 +1,18 @@
-import {HttpErrorResponse} from '@angular/common/http'
-import {inject} from '@angular/core'
-import {createEffect, Actions, ofType} from '@ngrx/effects'
-import {Store, select} from '@ngrx/store'
-import {switchMap, map, catchError, of, tap, withLatestFrom, take} from 'rxjs'
-import {withSpinner} from 'src/app/shared/spinner/operators/with-spinner.operator'
-import {FeedService} from '../services/feed.service'
-import {feedActions} from './actions'
+import { HttpErrorResponse } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { select, Store } from '@ngrx/store';
+import { catchError, map, of, switchMap, tap, withLatestFrom } from 'rxjs';
+import { withSpinner } from 'src/app/shared/spinner/operators/with-spinner.operator';
+import { FeedService } from '../services/feed.service';
+import { feedActions } from './actions';
 import {
   selectFirstPost,
   selectHasMorePostsBackward,
   selectHasMorePostsForward,
   selectInitialCursorId,
-  selectLastPost,
-} from './reducers'
+  selectLastPost
+} from './reducers';
 
 export const getFeedEffect = createEffect(
   (
@@ -22,30 +22,30 @@ export const getFeedEffect = createEffect(
   ) => {
     return actions$.pipe(
       ofType(feedActions.getFeed),
-      switchMap(({spinnerName}) => {
+      switchMap(({ spinnerName }) => {
         return feedService.getFeed(null).pipe(
           withSpinner(spinnerName, store),
           tap((posts) => {
             store.dispatch(
-              feedActions.storeInitialCursorId({cursor: posts[0]?.id})
-            )
+              feedActions.storeInitialCursorId({ cursor: posts[0]?.id })
+            );
           }),
           map((posts) =>
             feedActions.getFeedSuccess({
               posts,
               hasMorePostsForward: posts.length === 5,
-              hasMorePostsBackward: false,
+              hasMorePostsBackward: false
             })
           ),
           catchError((error: HttpErrorResponse) => {
-            return of(feedActions.getFeedFailure({message: error.message}))
+            return of(feedActions.getFeedFailure({ message: error.message }));
           })
-        )
+        );
       })
-    )
+    );
   },
-  {functional: true}
-)
+  { functional: true }
+);
 
 export const getNextPageEffect = createEffect(
   (
@@ -59,7 +59,7 @@ export const getNextPageEffect = createEffect(
         store.pipe(select(selectLastPost)),
         store.pipe(select(selectHasMorePostsForward))
       ),
-      switchMap(([{spinnerName}, cursor, hasMoreForward]) => {
+      switchMap(([{ spinnerName }, cursor, hasMoreForward]) => {
         if (hasMoreForward) {
           return feedService.getFeed(cursor).pipe(
             withSpinner(spinnerName, store),
@@ -67,21 +67,21 @@ export const getNextPageEffect = createEffect(
               feedActions.getFeedSuccess({
                 posts,
                 hasMorePostsForward: posts.length === 5,
-                hasMorePostsBackward: true,
+                hasMorePostsBackward: true
               })
             ),
             catchError((error: HttpErrorResponse) => {
-              return of(feedActions.getFeedFailure({message: error.message}))
+              return of(feedActions.getFeedFailure({ message: error.message }));
             })
-          )
+          );
         } else {
-          return of()
+          return of();
         }
       })
-    )
+    );
   },
-  {functional: true}
-)
+  { functional: true }
+);
 
 export const getPreviousPageEffect = createEffect(
   (
@@ -97,7 +97,7 @@ export const getPreviousPageEffect = createEffect(
         store.pipe(select(selectHasMorePostsBackward))
       ),
       switchMap(
-        ([{spinnerName}, initialCursor, cursor, hasMorePostsBackward]) => {
+        ([{ spinnerName }, initialCursor, cursor, hasMorePostsBackward]) => {
           if (
             hasMorePostsBackward &&
             initialCursor &&
@@ -109,41 +109,33 @@ export const getPreviousPageEffect = createEffect(
                 feedActions.getFeedSuccess({
                   posts,
                   hasMorePostsForward: posts.length === 5,
-                  hasMorePostsBackward: posts[0].id != initialCursor,
+                  hasMorePostsBackward: posts[0].id != initialCursor
                 })
               ),
               catchError((error: HttpErrorResponse) => {
-                return of(feedActions.getFeedFailure({message: error.message}))
+                return of(feedActions.getFeedFailure({ message: error.message }));
               })
-            )
+            );
           } else {
-            return of()
+            return of();
           }
         }
       )
-    )
+    );
   },
-  {functional: true}
-)
+  { functional: true }
+);
 
 export const getFeedSuccess = createEffect(
-  (
-    store = inject(Store),
-    actions$ = inject(Actions),
-    feedService = inject(FeedService)
-  ) => {
-    return actions$.pipe(ofType(feedActions.getFeedSuccess))
+  (actions$ = inject(Actions)) => {
+    return actions$.pipe(ofType(feedActions.getFeedSuccess));
   },
-  {functional: true, dispatch: false}
-)
+  { functional: true, dispatch: false }
+);
 
 export const getFeedFailure = createEffect(
-  (
-    store = inject(Store),
-    actions$ = inject(Actions),
-    feedService = inject(FeedService)
-  ) => {
-    return actions$.pipe(ofType(feedActions.getFeedFailure))
+  (actions$ = inject(Actions)) => {
+    return actions$.pipe(ofType(feedActions.getFeedFailure));
   },
-  {functional: true, dispatch: false}
-)
+  { functional: true, dispatch: false }
+);

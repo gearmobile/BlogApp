@@ -1,10 +1,10 @@
-import {NgModule} from '@angular/core'
-import {ReactiveFormsModule} from '@angular/forms'
-import {AuthRoutingModule} from './auth-routing.module'
-import {RegisterComponent} from './components/register/register.component'
-import {LoginComponent} from './components/login/login.component'
-import {AuthModule as FireAuthModule} from '@angular/fire/auth'
-import {SharedModule} from '../shared/shared.module'
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AuthRoutingModule } from './auth-routing.module';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthModule as FireAuthModule } from '@angular/fire/auth';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [RegisterComponent, LoginComponent],
@@ -12,7 +12,8 @@ import {SharedModule} from '../shared/shared.module'
     ReactiveFormsModule,
     AuthRoutingModule,
     FireAuthModule,
-    SharedModule,
-  ],
+    SharedModule
+  ]
 })
-export class AuthModule {}
+export class AuthModule {
+}

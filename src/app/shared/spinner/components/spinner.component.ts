@@ -1,29 +1,27 @@
-import {Component, Input, OnInit} from '@angular/core'
-import {Store} from '@ngrx/store'
-import {getSpinnerState} from '../store/selectors'
-import {spinnerActions} from '../store/actions'
-import {Observable} from 'rxjs'
+import { Component, inject, Input, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { getSpinnerState } from '../store/selectors';
+import { spinnerActions } from '../store/actions';
 
 @Component({
   selector: 'app-spinner',
   templateUrl: './spinner.component.html',
-  styleUrls: ['./spinner.component.scss'],
+  styleUrls: ['./spinner.component.scss']
 })
 export class SpinnerComponent implements OnInit {
-  @Input()
-  spinnerName!: string
+  private readonly store = inject(Store);
 
   @Input()
-  fullscreen = true
+  spinnerName!: string;
 
-  spinner$!: Observable<boolean>
+  @Input()
+  fullscreen = true;
 
-  constructor(private store: Store) {}
+  public readonly spinner$ = this.store.select(getSpinnerState(this.spinnerName));
 
   ngOnInit() {
     this.store.dispatch(
-      spinnerActions.addSpinner({spinnerName: this.spinnerName})
-    )
-    this.spinner$ = this.store.select(getSpinnerState(this.spinnerName))
+      spinnerActions.addSpinner({ spinnerName: this.spinnerName })
+    );
   }
 }

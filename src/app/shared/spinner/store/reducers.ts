@@ -1,30 +1,30 @@
-import {createFeature, createReducer, on} from '@ngrx/store'
-import {SpinnerState} from '../../types/spinnerState'
-import {spinnerActions} from './actions'
+import { createFeature, createReducer, on } from '@ngrx/store';
+import { SpinnerStateInterface } from '../../types/spinnerState.interface';
+import { spinnerActions } from './actions';
 
-const initialState: SpinnerState = {}
+const initialState: SpinnerStateInterface = {};
 
 const spinnerFeature = createFeature({
   name: 'spinner',
   reducer: createReducer(
     initialState,
-    on(spinnerActions.startSpinner, (state, {spinnerName}) => ({
+    on(spinnerActions.startSpinner, (state, { spinnerName }) => ({
       ...state,
-      [spinnerName]: true,
+      [spinnerName]: true
     })),
-    on(spinnerActions.stopSpinner, (state, {spinnerName}) => ({
+    on(spinnerActions.stopSpinner, (state, { spinnerName }) => ({
       ...state,
-      [spinnerName]: false,
+      [spinnerName]: false
     })),
-    on(spinnerActions.addSpinner, (state, {spinnerName}) => ({
+    on(spinnerActions.addSpinner, (state, { spinnerName }) => ({
       ...state,
-      [spinnerName]: false,
+      [spinnerName]: false
     }))
-  ),
-})
+  )
+});
 
 export const {
   name: spinnerFeatureKey,
   reducer: spinnerReducer,
-  selectSpinnerState,
-} = spinnerFeature
+  selectSpinnerState
+} = spinnerFeature;
